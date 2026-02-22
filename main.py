@@ -11,6 +11,7 @@ from datetime import datetime
 # =========================================================
 # 1. CONFIGURACIÓN SOBERANA (TELEGRAM)
 # =========================================================
+# RECUERDA: Pon tus credenciales reales aquí para recibir los leads
 TELEGRAM_TOKEN = "8324022092:AAGRWaHV_hyztesmv9OVUrhCjyX77YKwkF8"
 TELEGRAM_CHAT_ID = "8172796173"
 
@@ -20,7 +21,7 @@ TELEGRAM_CHAT_ID = "8172796173"
 def run_internal_scan(domain):
     results = {"hits": [], "level": "LOW", "top_finding": "No critical exposure"}
     
-    # A. Subdominios Olvidados (Gatillo de curiosidad)
+    # A. Subdominios (Gatillo de curiosidad)
     subdomains = ['dev', 'test', 'staging', 'api', 'vpn', 'admin']
     for sub in subdomains:
         try:
@@ -30,8 +31,8 @@ def run_internal_scan(domain):
             if results['level'] != "CRITICAL": results['level'] = "HIGH"
         except: continue
 
-    # B. Puertos de Bases de Datos (Gatillo de miedo)
-    db_ports = {3306: "MySQL", 27017: "MongoDB", 5432: "PostgreSQL", 9200: "Elasticsearch", 6379: "Redis"}
+    # B. Bases de Datos (Gatillo de miedo)
+    db_ports = {3306: "MySQL", 27017: "MongoDB", 5432: "PostgreSQL", 9200: "Elasticsearch"}
     for port, name in db_ports.items():
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.settimeout(2.0)
@@ -41,20 +42,11 @@ def run_internal_scan(domain):
 
     # C. Archivos Críticos y SSL
     try:
-        # Check de archivo .env
         env_res = requests.get(f"https://{domain}/.env", timeout=2, verify=False)
         if env_res.status_code == 200:
             results['hits'].append("CRITICAL: Environment configuration file (.env) is public.")
             results['level'] = "CRITICAL"
-        
-        # SSL Status
-        context = ssl.create_default_context()
-        with socket.create_connection((domain, 443), timeout=2) as sock:
-            with context.wrap_socket(sock, server_hostname=domain) as ssock:
-                ssock.getpeercert()
-    except:
-        results['hits'].append("HIGH: SSL/TLS vulnerabilities or misconfiguration.")
-        if results['level'] == "LOW": results['level'] = "HIGH"
+    except: pass
 
     if results['hits']: results['top_finding'] = results['hits'][0]
     return results
@@ -73,7 +65,7 @@ def send_telegram_alert(domain, hits, email, name, top_finding):
     except: pass
 
 # =========================================================
-# 3. INTERFAZ DE VENTA (ESTÉTICA HIGH-END)
+# 3. INTERFAZ DE VENTA (SENTINEL TRIPWIRE EDITION)
 # =========================================================
 st.set_page_config(page_title="SENTINEL | Strategic Risk Advisory", page_icon="🛡️", layout="wide")
 
@@ -104,7 +96,7 @@ with col1:
                 st.markdown(f"### ⚠️ {scan['level']} RISK VECTORS DETECTED")
                 for hit in scan['hits']:
                     st.markdown(f'<div class="critical-alert">{hit}</div>', unsafe_allow_html=True)
-            else: st.success("Initial scan clear. Advanced vectors may still be present in the deep-audit.")
+            else: st.success("Initial scan clear. Deep-audit recommended for hidden vulnerabilities.")
 
         client_name = st.text_input("FULL NAME:")
         client_email = st.text_input("CORPORATE EMAIL:")
@@ -121,32 +113,35 @@ with col2:
     if st.session_state.get('lead_saved'):
         st.markdown('<div style="text-align: center; padding: 30px; border: 2px solid #1a1a1a; border-radius: 12px; background: white;">', unsafe_allow_html=True)
         
-        # OPCIÓN 1: EL GANCHO (TRIPWIRE)
+        # OPCIÓN 1: EL GANCHO ($99)
         st.markdown('<p style="color:#666; font-weight:bold; margin-bottom:0;">BASIC FLASH REPORT</p>', unsafe_allow_html=True)
         st.markdown('<h2 style="margin:0;">$99</h2>', unsafe_allow_html=True)
-        st.write("Instant 3-page technical gap analysis.")
+        st.write("3-page technical gap analysis.")
         
-        params_99 = urllib.parse.urlencode({"checkout[email]": client_email, "checkout[name]": client_name, "checkout[custom][domain]": domain_input})
-        url_99 = f"https://TU-TIENDA.lemonsqueezy.com/checkout/buy/ID-GANCHO?{params_99}"
+        params_url = urllib.parse.urlencode({
+            "checkout[email]": client_email, 
+            "checkout[name]": client_name, 
+            "checkout[custom][domain]": domain_input
+        })
+        
+        url_99 = f"https://core-digital-ia.lemonsqueezy.com/checkout/buy/60ab6e52-0a78-4d79-b501-064089db80b6?{params_url}"
         st.markdown(f'<a href="{url_99}" target="_blank" class="btn-payment btn-tripwire">GET FLASH REPORT</a>', unsafe_allow_html=True)
         
         st.markdown("<br><p style='font-size:0.8rem; color:#bbb;'>— RECOMMENDED —</p>", unsafe_allow_html=True)
         
-        # OPCIÓN 2: EL ELITE (CORE OFFER)
+        # OPCIÓN 2: EL ELITE ($650)
         st.markdown('<p style="color:#1a1a1a; font-weight:bold; margin-bottom:0;">FULL STRATEGIC AUDIT</p>', unsafe_allow_html=True)
         st.markdown('<h2 style="margin:0;">$650</h2>', unsafe_allow_html=True)
         st.write("20-page roadmap + Priority intervention.")
         
-        params_650 = urllib.parse.urlencode({"checkout[email]": client_email, "checkout[name]": client_name, "checkout[custom][domain]": domain_input})
-        url_650 = f"https://core-digital-ia.lemonsqueezy.com/checkout?{params_650}"
+        url_650 = f"https://core-digital-ia.lemonsqueezy.com/checkout?{params_url}" # Usamos el checkout principal de $650
         st.markdown(f'<a href="{url_650}" target="_blank" class="btn-payment">ACTIVATE FULL AUDIT</a>', unsafe_allow_html=True)
         
         st.markdown("---")
-        legal_auth = st.checkbox("I certify I am the authorized representative.")
+        legal_auth = st.checkbox("I authorize this non-intrusive OSINT assessment.")
         st.markdown('</div>', unsafe_allow_html=True)
     else:
-        st.info("Complete the initiation protocol to unlock strategic options.")
+        st.info("Initiate protocol to reveal strategic vulnerability details.")
 
-# Footer
-st.markdown('<p style="text-align:center; color:#999; font-size:0.7rem; margin-top:100px;">Sentinel Unit © 2026. Non-intrusive OSINT Methodology.</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align:center; color:#999; font-size:0.7rem; margin-top:100px;">Sentinel Unit © 2026. Passive OSINT Methodology.</p>', unsafe_allow_html=True)
 
