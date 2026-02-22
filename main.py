@@ -11,8 +11,8 @@ from datetime import datetime
 # =========================================================
 # 1. CONFIGURACIÓN SOBERANA (TELEGRAM)
 # =========================================================
-TELEGRAM_TOKEN = "TU_TOKEN_AQUÍ"
-TELEGRAM_CHAT_ID = "TU_CHAT_ID_AQUÍ"
+TELEGRAM_TOKEN = "8324022092:AAGRWaHV_hyztesmv9OVUrhCjyX77YKwkF8"
+TELEGRAM_CHAT_ID = "8172796173"
 
 # =========================================================
 # 2. MOTOR DE ANÁLISIS INTERNO (OSINT PASIVO)
@@ -149,3 +149,4 @@ with col2:
 
 # Footer
 st.markdown('<p style="text-align:center; color:#999; font-size:0.7rem; margin-top:100px;">Sentinel Unit © 2026. Non-intrusive OSINT Methodology.</p>', unsafe_allow_html=True)
+
