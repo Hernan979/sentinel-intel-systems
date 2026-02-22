@@ -1,127 +1,79 @@
 import streamlit as st
+import time
 
-# 1. Configuración de Seguridad de Alto Nivel
-st.set_page_config(
-    page_title="SENTINEL | Executive Audit", 
-    page_icon="🛡️", 
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
+# 1. Configuración de Élite
+st.set_page_config(page_title="SENTINEL | Intelligence Unit", page_icon="🛡️", layout="wide")
 
-# 2. HACK DE INTERFAZ: Ocultar menús de Streamlit para parecer Software Propietario
+# 2. CSS de Grado Militar (Hackeo de Interfaz)
 st.markdown("""
     <style>
-    /* Ocultar elementos de Streamlit */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
-    .stDeployButton {display:none;}
+    .stApp { background-color: #000000; font-family: 'Courier New', Courier, monospace; color: #00ff00; }
     
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
-
-    /* Fondo de Terminal */
-    .stApp {
-        background-color: #000000;
-        font-family: 'Space Mono', monospace;
-        color: #e0e0e0;
-    }
-
-    /* Contenedor de Intervención */
-    .main-terminal {
-        max-width: 800px;
-        margin: 50px auto;
-        border: 1px solid #1a1a1a;
-        padding: 40px;
-        background: linear-gradient(180deg, #050505 0%, #000000 100%);
-        box-shadow: 0 0 50px rgba(255, 75, 43, 0.1);
-    }
-
-    .header-code {
-        color: #444;
-        font-size: 0.7rem;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #1a1a1a;
+    .terminal-header {
+        border-bottom: 2px solid #ff4b2b;
         padding-bottom: 10px;
+        margin-bottom: 30px;
     }
-
-    .glitch {
-        color: #ff4b2b;
-        font-weight: bold;
-        font-size: 1.8rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-    }
-
-    .audit-block {
-        margin: 25px 0;
-        padding-left: 20px;
-        border-left: 2px solid #1a1a1a;
-    }
-
-    .audit-block:hover {
-        border-left: 2px solid #ff4b2b;
-        background: rgba(255, 75, 43, 0.02);
-    }
-
-    .price-container {
-        margin-top: 40px;
+    .status-online { color: #00ff00; font-size: 0.8rem; animation: blinker 1s linear infinite; }
+    @keyframes blinker { 50% { opacity: 0; } }
+    
+    .scan-line { font-size: 0.9rem; color: #888; margin: 5px 0; }
+    
+    .price-card {
+        background: #0a0a0a;
         border: 1px solid #333;
-        padding: 30px;
+        padding: 40px;
         text-align: center;
+        border-top: 5px solid #ff4b2b;
     }
-
-    /* El Botón de 650€ - Look de Ejecución */
-    .btn-exec {
+    
+    .btn-buy {
         display: block;
-        background-color: #ffffff;
-        color: #000000 !important;
+        background: #ff4b2b;
+        color: white !important;
         text-decoration: none;
-        padding: 20px;
+        padding: 25px;
         font-weight: bold;
-        font-size: 1.2rem;
-        letter-spacing: 2px;
-        transition: 0.2s;
-        margin-top: 20px;
+        font-size: 1.5rem;
+        margin-top: 30px;
+        border-radius: 5px;
     }
-
-    .btn-exec:hover {
-        background-color: #ff4b2b;
-        color: #ffffff !important;
-    }
-
+    .btn-buy:hover { background: #ffffff; color: #000000 !important; box-shadow: 0 0 40px #ff4b2b; }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Estructura de la Terminal
-with st.container():
-    st.markdown('<div class="main-terminal">', unsafe_allow_html=True)
+# 3. Interfaz de Usuario (Terminal Activa)
+st.markdown('<div class="terminal-header">', unsafe_allow_html=True)
+st.markdown('<h1>🛡️ SENTINEL INTEL SYSTEMS</h1>', unsafe_allow_html=True)
+st.markdown('<p class="status-online">● SYSTEM_ONLINE // SECURE_ENCRYPTION_ACTIVE</p>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+col1, col2 = st.columns([2, 1])
+
+with col1:
+    st.markdown("### 🖥️ DIAGNÓSTICO DE ACTIVOS")
+    st.markdown('<p class="scan-line">> Scanning global infrastructure...</p>', unsafe_allow_html=True)
+    st.progress(85)
+    st.markdown('<p class="scan-line">> 138 Alpha assets detected.</p>', unsafe_allow_html=True)
+    st.markdown('<p class="scan-line">> Vulnerability check: PENDING_PAYMENT</p>', unsafe_allow_html=True)
     
-    st.markdown('<p class="header-code">ID: SENTINEL_V2.0 // STATUS: READY_TO_DEPLOY // ACCESS: RESTRICTED</p>', unsafe_allow_html=True)
-    st.markdown('<p class="glitch">SENTINEL INTEL SYSTEMS</p>', unsafe_allow_html=True)
-    st.markdown('<p style="color:#666; font-size: 0.9rem;">High-Level Risk Mitigation & Executive Intervention</p>', unsafe_allow_html=True)
+    st.info("""
+    **SERVICIO DE INTERVENCIÓN EJECUTIVA**
+    - [EN] Global Executive Audit: Infrastructure analysis & financial leak detection.
+    - [FR] Audit d'Intervention Prioritaire: Détection des risques financiers.
+    - [ES] Auditoría de Mitigación Prioritaria: Informe de riesgo en < 24h.
+    """)
 
-    # Bloques de Servicio
-    st.markdown("""
-    <div class="audit-block">
-        <p><strong>[GLOBAL_AUDIT_EN]</strong> Infrastructure analysis powered by Alpha assets. Identification of critical financial leaks.</p>
-    </div>
-    <div class="audit-block">
-        <p><strong>[INTERVENTION_FR]</strong> Analyse de haut niveau. Détection des risques et plan d'action immédiat.</p>
-    </div>
-    <div class="audit-block">
-        <p><strong>[MITIGACIÓN_ES]</strong> Informe ejecutivo de activos digitales y escenarios de riesgo. Entrega &lt; 24h.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Checkout
-    st.markdown("""
-    <div class="price-container">
-        <p style="color: #444; margin-bottom: 5px;">TOTAL_INVESTMENT</p>
-        <p style="font-size: 2.5rem; font-weight: bold; margin: 0;">650,00 €</p>
-        <p style="font-size: 0.7rem; color: #ff4b2b; margin-top: 5px;">OFFICIAL INVOICE PROVIDED // MULTILINGUAL SUPPORT</p>
-        <a href="https://core-digital-ia.lemonsqueezy.com/checkout" class="btn-exec">AUTHORIZE DEPLOYMENT</a>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown('<p style="text-align: center; color: #1a1a1a; font-size: 0.6rem; margin-top: 30px;">SECURE CONNECTION ESTABLISHED // PORT 8080</p>', unsafe_allow_html=True)
+with col2:
+    st.markdown('<div class="price-card">', unsafe_allow_html=True)
+    st.markdown('<p style="color: #888;">INVERSIÓN TOTAL</p>', unsafe_allow_html=True)
+    st.markdown('<h2 style="font-size: 3rem; color: #fff;">650,00 €</h2>', unsafe_allow_html=True)
+    st.markdown('<p style="font-size: 0.8rem;">ENTREGA GARANTIZADA < 24H</p>', unsafe_allow_html=True)
+    st.markdown(f'<a href="https://core-digital-ia.lemonsqueezy.com/checkout" class="btn-buy">INICIAR AUDITORÍA</a>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown('<p style="color: #222; text-align: center; margin-top: 100px;">ACCESS_POINT: 192.168.1.104 // ENCRYPTED_BY_SENTINEL_ELITE</p>', unsafe_allow_html=True)
+
